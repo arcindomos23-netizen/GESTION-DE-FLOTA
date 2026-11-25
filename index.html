@@ -3,103 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Flota - Conductores</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Registro diario de ruta, kilometraje y horas de motor para conductores de Interaseo.">
+    <meta name="theme-color" content="#1D4F91">
+    <title>Control de Ruta · Interaseo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul: #1D4F91;
+            --azul-oscuro: #143A6E;
+            --azul-suave: #E8EEF7;
+            --verde: #3FA535;
+            --amarillo: #F2E205;
+            --texto: #1E2633;
+            --gris: #6B7685;
+            --borde: #DCE2EA;
+            --fondo: #F4F6F9;
+            --error: #D64545;
+            --radio: 14px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--texto);
+            background: var(--fondo);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .franja {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(160deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            position: absolute;
+            top: 0; left: 0;
+            border-radius: 0 0 32px 32px;
+            overflow: hidden;
+        }
+        .franja::after {
+            content: '';
+            position: absolute;
+            width: 260px; height: 260px;
+            right: -70px; top: -90px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 30%, var(--verde), var(--amarillo));
+            opacity: .9;
+        }
+        main {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            padding: 28px 18px 40px;
+        }
+        .marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            margin-bottom: 26px;
+        }
+        .marca svg { width: 44px; height: 44px; flex-shrink: 0; }
+        .marca strong { display: block; font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; }
+        .marca span { font-size: .8rem; opacity: .8; }
+        .tarjeta {
+            background: #fff;
+            border-radius: 22px;
+            padding: 26px 22px 24px;
+            box-shadow: 0 18px 40px -18px rgba(20, 58, 110, .35);
+            animation: subir .45s ease-out;
+        }
+        @keyframes subir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+        h1 { font-size: 1.4rem; font-weight: 700; color: var(--azul-oscuro); }
+        .sub { color: var(--gris); font-size: .9rem; margin: 4px 0 22px; }
+        .campo { margin-bottom: 16px; position: relative; }
+        .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        label { display: block; font-size: .78rem; font-weight: 600; color: var(--gris); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+        input {
+            width: 100%;
+            font: inherit;
+            font-size: 1rem;
+            padding: 13px 14px;
+            border: 1.5px solid var(--borde);
+            border-radius: var(--radio);
+            background: #FBFCFD;
+            color: var(--texto);
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+        input::placeholder { color: #A8B1BD; }
+        input:focus { outline: none; border-color: var(--azul); background: #fff; box-shadow: 0 0 0 4px rgba(29, 79, 145, .12); }
+        #placa { text-transform: uppercase; font-weight: 600; letter-spacing: .05em; }
+        #nombre { text-transform: capitalize; }
+        .sugerencias {
+            list-style: none;
+            position: absolute;
+            z-index: 10;
+            left: 0; right: 0;
+            margin-top: 6px;
+            background: #fff;
+            border: 1px solid var(--borde);
+            border-radius: var(--radio);
+            box-shadow: 0 14px 30px -12px rgba(20, 58, 110, .3);
+            max-height: 260px;
+            overflow: auto;
+            padding: 6px;
+        }
+        .sugerencias li { padding: 10px 12px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .sugerencias li:hover, .sugerencias li.activo { background: var(--azul-suave); }
+        .sugerencias .pl { font-weight: 700; letter-spacing: .05em; color: var(--azul-oscuro); }
+        .sugerencias .cod { font-size: .8rem; font-weight: 600; color: var(--verde); background: #EEF7EC; padding: 3px 8px; border-radius: 999px; }
+        .sugerencias .vacio { color: var(--gris); cursor: default; }
+        button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 15px;
+            font: inherit;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            border: none;
+            border-radius: var(--radio);
+            background: linear-gradient(135deg, var(--azul), var(--azul-oscuro));
+            box-shadow: 0 10px 22px -10px rgba(29, 79, 145, .7);
+            cursor: pointer;
+            transition: transform .15s, box-shadow .2s, opacity .2s;
+        }
+        button:hover { transform: translateY(-1px); box-shadow: 0 14px 26px -10px rgba(29, 79, 145, .8); }
+        button:active { transform: translateY(0); }
+        button:disabled { opacity: .6; cursor: wait; }
+        .alerta { padding: 12px 14px; border-radius: 12px; font-size: .9rem; margin-bottom: 16px; animation: subir .3s ease-out; }
+        .alerta.error { background: #FDECEC; color: var(--error); border-left: 4px solid var(--error); }
+        .alerta.exito { background: #EEF7EC; color: #2C7A25; border-left: 4px solid var(--verde); }
+        .hidden { display: none !important; }
+        footer { text-align: center; font-size: .75rem; color: var(--gris); margin-top: 22px; }
+        footer::before {
+            content: ''; display: block; width: 46px; height: 4px; margin: 0 auto 10px; border-radius: 4px;
+            background: linear-gradient(90deg, var(--verde), var(--amarillo));
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-4 md:p-8 font-sans flex items-center justify-center min-h-screen">
+<body>
+    <div class="franja" aria-hidden="true"></div>
 
-    <div class="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Control de Ruta</h2>
-        
-        <div id="alertaError" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-            <span class="block sm:inline" id="textoError"></span>
-        </div>
-        <div id="alertaExito" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
-            <span class="block sm:inline">Registro guardado correctamente. Buen viaje.</span>
-        </div>
+    <main>
+        <header class="marca">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="sol" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#3FA535"/>
+                        <stop offset="1" stop-color="#F2E205"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="24" cy="13" r="10" fill="url(#sol)"/>
+                <path d="M6 44 L17 22 L22 22 L13 40 L35 40 L26 22 L31 22 L42 44 Z" fill="#fff"/>
+            </svg>
+            <div>
+                <strong>INTERASEO</strong>
+                <span>Gestión de flota</span>
+            </div>
+        </header>
 
-        <form id="formularioRegistro" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Nombre del Conductor</label>
-                <input type="text" id="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border capitalize" placeholder="Ej: Juan Pérez">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Placa del Vehículo</label>
-                <input type="text" id="placa" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border uppercase" placeholder="ABC-123">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Kilometraje Actual</label>
-                <input type="number" id="km" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Ej: 50000">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Horas de Motor</label>
-                <input type="number" id="horas" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Ej: 1200">
-            </div>
-            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition shadow-lg mt-4">
-                Guardar Registro
-            </button>
-        </form>
-    </div>
+        <section class="tarjeta">
+            <h1>Control de ruta</h1>
+            <p class="sub">Registra los datos del vehículo antes de salir.</p>
+
+            <div id="alertaError" class="alerta error hidden" role="alert"><span id="textoError"></span></div>
+            <div id="alertaExito" class="alerta exito hidden" role="status">Registro guardado correctamente. ¡Buen viaje!</div>
+
+            <form id="formularioRegistro" autocomplete="off">
+                <div class="campo">
+                    <label for="nombre">Conductor</label>
+                    <input type="text" id="nombre" required placeholder="Nombre completo">
+                </div>
+                <div class="campo">
+                    <label for="placa">Vehículo</label>
+                    <input type="text" id="placa" required placeholder="Placa o activo">
+                    <ul id="sugerencias" class="sugerencias hidden"></ul>
+                </div>
+                <div class="campo">
+                    <label for="ruta">Ruta</label>
+                    <input type="text" id="ruta" required placeholder="Ej: Bodega - Centro">
+                </div>
+                <div class="fila">
+                    <div class="campo">
+                        <label for="km">Kilometraje</label>
+                        <input type="number" id="km" required min="0" step="any" inputmode="decimal" placeholder="50000">
+                    </div>
+                    <div class="campo">
+                        <label for="horas">Horas motor</label>
+                        <input type="number" id="horas" required min="0" step="any" inputmode="decimal" placeholder="1200">
+                    </div>
+                </div>
+                <button id="btnGuardar" type="submit">Guardar registro</button>
+            </form>
+        </section>
+
+        <footer>Interaseo · Control de flota</footer>
+    </main>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { supabase } from "./supabase.js";
 
-        // PEGA AQUÍ TU FIREBASECONFIG
-        const firebaseConfig = {
-            apiKey: "AIzaSyC6ZApOI4Q2llDSkblPYnK5wcQ_hxuOkX8",
-            authDomain: "app-gestion-de-flota.firebaseapp.com",
-            projectId: "app-gestion-de-flota",
-            storageBucket: "app-gestion-de-flota.firebasestorage.app",
-            messagingSenderId: "801593641234",
-            appId: "1:801593641234:web:36812ab0499b1bc549cbcb",
-            measurementId: "G-BG9TXV3XXM"
-        };
+        const selectPlaca = document.getElementById('placa');
+        const listaSug = document.getElementById('sugerencias');
+        let vehiculos = [];
+        let indiceActivo = -1;
+        const alertaError = document.getElementById('alertaError');
+        const textoError = document.getElementById('textoError');
+        const alertaExito = document.getElementById('alertaExito');
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        function mostrarError(msg) {
+            textoError.textContent = msg;
+            alertaError.classList.remove('hidden');
+        }
+
+        // Cargar vehículos disponibles desde la tabla "vehiculos"
+        async function cargarVehiculos() {
+            const { data, error } = await supabase
+                .from('vehiculos')
+                .select('codigo, placa, descripcion')
+                .order('codigo');
+
+            if (error) {
+                console.error(error);
+                mostrarError('Error al cargar vehículos.');
+                return;
+            }
+            vehiculos = data;
+        }
+        cargarVehiculos();
+
+        // Sugerencias según lo escrito (placa o activo)
+        function mostrarSugerencias() {
+            const texto = selectPlaca.value.trim().toUpperCase();
+            indiceActivo = -1;
+            if (!texto) { listaSug.classList.add('hidden'); return; }
+            const coincidencias = vehiculos
+                .filter(v => v.placa.toUpperCase().includes(texto) || (v.codigo ?? '').toUpperCase().includes(texto))
+                .slice(0, 8);
+            listaSug.innerHTML = coincidencias.length
+                ? coincidencias.map(v => `<li data-placa="${v.placa}"><span class="pl">${v.placa}</span><span class="cod">${v.codigo ?? ''}</span></li>`).join('')
+                : '<li class="vacio">Sin coincidencias</li>';
+            listaSug.classList.remove('hidden');
+        }
+
+        function elegir(placa) {
+            selectPlaca.value = placa;
+            listaSug.classList.add('hidden');
+        }
+
+        selectPlaca.addEventListener('input', mostrarSugerencias);
+        listaSug.addEventListener('mousedown', (e) => {
+            const li = e.target.closest('li[data-placa]');
+            if (li) { e.preventDefault(); elegir(li.dataset.placa); }
+        });
+        selectPlaca.addEventListener('blur', () => listaSug.classList.add('hidden'));
+        selectPlaca.addEventListener('keydown', (e) => {
+            const items = listaSug.querySelectorAll('li[data-placa]');
+            if (listaSug.classList.contains('hidden') || !items.length) return;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                indiceActivo = (indiceActivo + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+                items.forEach((li, i) => li.classList.toggle('activo', i === indiceActivo));
+            } else if (e.key === 'Enter' && indiceActivo >= 0) {
+                e.preventDefault();
+                elegir(items[indiceActivo].dataset.placa);
+            } else if (e.key === 'Escape') {
+                listaSug.classList.add('hidden');
+            }
+        });
 
         document.getElementById('formularioRegistro').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const placa = document.getElementById('placa').value.toUpperCase();
+            const nombre = document.getElementById('nombre').value.trim();
+            const placa = selectPlaca.value.trim().toUpperCase();
+            const ruta = document.getElementById('ruta').value.trim();
             const km = parseFloat(document.getElementById('km').value);
             const horas = parseFloat(document.getElementById('horas').value);
-            const alertaError = document.getElementById('alertaError');
-            const textoError = document.getElementById('textoError');
-            const alertaExito = document.getElementById('alertaExito');
-            
+            const btn = document.getElementById('btnGuardar');
+
             alertaError.classList.add('hidden');
             alertaExito.classList.add('hidden');
 
-            try {
-                const registrosRef = collection(db, "registros");
-                const q = query(registrosRef, where("placa", "==", placa), orderBy("fecha", "desc"), limit(1));
-                const querySnapshot = await getDocs(q);
+            if (!vehiculos.some(v => v.placa === placa)) {
+                mostrarError('La placa no está registrada. Elige una de las sugerencias.');
+                return;
+            }
+            btn.disabled = true;
 
-                if (!querySnapshot.empty) {
-                    const ultimoRegistro = querySnapshot.docs[0].data();
-                    if (km < ultimoRegistro.km || horas < ultimoRegistro.horas) {
-                        textoError.textContent = `Error: Valores inferiores al registro anterior (KM: ${ultimoRegistro.km}, Horas: ${ultimoRegistro.horas}).`;
-                        alertaError.classList.remove('hidden');
+            try {
+                // Último registro del vehículo
+                const { data: previos, error: errPrevio } = await supabase
+                    .from('registros')
+                    .select('km, horas')
+                    .eq('placa', placa)
+                    .order('fecha', { ascending: false })
+                    .limit(1);
+                if (errPrevio) throw errPrevio;
+
+                if (previos.length) {
+                    const ultimo = previos[0];
+                    if (km < ultimo.km || horas < ultimo.horas) {
+                        // TODO: aquí se disparará la alerta por correo (EmailJS)
+                        mostrarError(`Error: Valores inferiores al registro anterior (KM: ${ultimo.km}, Horas: ${ultimo.horas}).`);
                         return;
                     }
                 }
 
-                await addDoc(registrosRef, {
-                    nombre,
-                    placa,
-                    km,
-                    horas,
-                    fecha: new Date().toISOString()
-                });
+                const { error: errInsert } = await supabase
+                    .from('registros')
+                    .insert({ nombre, placa, ruta, km, horas });
+                if (errInsert) throw errInsert;
 
                 alertaExito.classList.remove('hidden');
                 e.target.reset();
             } catch (error) {
                 console.error("Error al guardar: ", error);
-                textoError.textContent = "Error de conexión con la base de datos.";
-                alertaError.classList.remove('hidden');
+                mostrarError("Error de conexión con la base de datos.");
+            } finally {
+                btn.disabled = false;
             }
         });
     </script>

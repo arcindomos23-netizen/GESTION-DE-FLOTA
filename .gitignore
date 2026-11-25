@@ -1,0 +1,7 @@
+# Datos locales de flota (no subir listado real al repositorio público)
+cargar_vehiculos.sql
+*.xlsx
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

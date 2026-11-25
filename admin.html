@@ -3,91 +3,1012 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - Flota</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-200 p-4 md:p-8 font-sans flex items-center justify-center min-h-screen">
+    <meta name="description" content="Panel Administrativo de Flota Interaseo">
+    <meta name="theme-color" content="#1D4F91">
+    <title>Panel de Administración · Interaseo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul: #1D4F91;
+            --azul-oscuro: #143A6E;
+            --azul-sidebar: #0F2D57;
+            --azul-sidebar-hover: #19437D;
+            --azul-suave: #EBF1F9;
+            --verde: #3FA535;
+            --verde-suave: #EEF8ED;
+            --amarillo: #F2E205;
+            --texto: #1E2633;
+            --texto-secundario: #606C7D;
+            --gris-borde: #E3E8EF;
+            --fondo: #F4F6F9;
+            --blanco: #FFFFFF;
+            --ancho-sidebar: 270px;
+            --radio: 14px;
+            --sombra: 0 14px 34px -10px rgba(20, 58, 110, 0.1);
+        }
 
-    <div class="w-full max-w-lg mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Panel de Administración</h2>
-        <p class="text-gray-500 text-sm text-center mb-6">Exportación de datos de telemetría</p>
-        
-        <div class="space-y-6">
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* ================= SIDEBAR (SIDENAV) ================= */
+        aside.sidebar {
+            width: var(--ancho-sidebar);
+            background: linear-gradient(180deg, var(--azul-sidebar) 0%, #0A1E3B 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; bottom: 0; left: 0;
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .sidebar-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 20px; right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--verde), var(--amarillo));
+        }
+
+        .sidebar-header svg { width: 38px; height: 38px; flex-shrink: 0; }
+        .sidebar-header strong { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.06em; display: block; }
+        .sidebar-header span { font-size: 0.76rem; opacity: 0.8; }
+
+        .sidebar-menu {
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .menu-categoria {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 8px 12px 4px;
+        }
+
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .btn-nav svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            flex-shrink: 0;
+            opacity: 0.85;
+        }
+
+        .btn-nav:hover {
+            background: var(--azul-sidebar-hover);
+            color: #fff;
+        }
+
+        .btn-nav.activo {
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            border-left: 4px solid var(--verde);
+        }
+
+        .btn-nav.activo svg {
+            opacity: 1;
+            stroke: var(--amarillo);
+        }
+
+        .sidebar-footer {
+            padding: 18px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        /* Overlay móvil */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 30, 59, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 90;
+        }
+
+        /* ================= CONTENEDOR PRINCIPAL ================= */
+        .layout-principal {
+            margin-left: var(--ancho-sidebar);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left 0.3s;
+        }
+
+        /* Barra superior móvil / escritorio */
+        header.topbar {
+            background: var(--blanco);
+            border-bottom: 1px solid var(--gris-borde);
+            padding: 16px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .btn-menu-movil {
+            display: none;
+            background: var(--azul-suave);
+            border: none;
+            color: var(--azul);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .topbar-titulo h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+        }
+        .topbar-titulo span {
+            font-size: 0.8rem;
+            color: var(--texto-secundario);
+        }
+
+        .badge-conectado {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--verde);
+            background: var(--verde-suave);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+        .badge-conectado::before {
+            content: '';
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--verde);
+            animation: pulso 2s infinite;
+        }
+        @keyframes pulso {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Área de contenido */
+        main.contenido {
+            padding: 30px;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* Pantalla de Inicio / Bienvenida (antes de presionar Reportes) */
+        #vistaBienvenida {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        .tarjeta-bienvenida {
+            background: var(--blanco);
+            border-radius: 20px;
+            padding: 46px 30px;
+            max-width: 620px;
+            margin: 0 auto;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-borde);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tarjeta-bienvenida::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--verde), var(--amarillo));
+        }
+
+        .icono-bienvenida {
+            width: 68px;
+            height: 68px;
+            background: var(--azul-suave);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--azul);
+        }
+
+        .tarjeta-bienvenida h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+            margin-bottom: 8px;
+        }
+
+        .tarjeta-bienvenida p {
+            font-size: 0.95rem;
+            color: var(--texto-secundario);
+            line-height: 1.5;
+            margin-bottom: 26px;
+        }
+
+        .btn-cta-reporte {
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 24px -8px rgba(20, 58, 110, 0.5);
+            transition: all 0.2s;
+        }
+        .btn-cta-reporte:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px -8px rgba(20, 58, 110, 0.65);
+        }
+
+        /* Vista de Consulta de Reportes (desplegable) */
+        #vistaReportes {
+            display: none;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tarjeta-filtros {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 26px;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-borde);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .tarjeta-filtros::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            border-radius: var(--radio) var(--radio) 0 0;
+            background: linear-gradient(90deg, var(--azul), var(--verde));
+        }
+
+        .titulo-seccion {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .sub-seccion {
+            font-size: 0.9rem;
+            color: var(--texto-secundario);
+            margin-bottom: 20px;
+        }
+
+        .grid-filtros {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .grupo-campo {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        select, input[type="date"] {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            color: var(--texto);
+            border: 1.5px solid var(--gris-borde);
+            border-radius: 12px;
+            background: #FAFCFE;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus, input[type="date"]:focus {
+            border-color: var(--azul);
+            background: var(--blanco);
+            box-shadow: 0 0 0 4px rgba(29, 79, 145, 0.12);
+        }
+
+        .acciones-filtros {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-consultar {
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            color: #fff;
+            border: none;
+            padding: 13px 26px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px -6px rgba(20, 58, 110, 0.45);
+            transition: all 0.2s;
+        }
+        .btn-consultar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px -6px rgba(20, 58, 110, 0.6);
+        }
+        .btn-consultar:disabled { opacity: 0.6; cursor: wait; }
+
+        .btn-limpiar {
+            background: var(--azul-suave);
+            color: var(--azul);
+            border: 1px solid rgba(29, 79, 145, 0.15);
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-limpiar:hover { background: #E1EAF5; }
+
+        /* Tarjetas de Métricas */
+        .metricas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .tarjeta-metrica {
+            background: var(--blanco);
+            border-radius: 12px;
+            padding: 16px 18px;
+            border: 1px solid var(--gris-borde);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tarjeta-metrica .kpi-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+        }
+
+        .tarjeta-metrica .kpi-valor {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--azul-oscuro);
+        }
+
+        /* Tabla de Resultados */
+        .barra-tabla {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .barra-tabla h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+        }
+
+        .btn-exportar {
+            background: var(--azul-oscuro);
+            color: #fff;
+            border: none;
+            padding: 9px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .btn-exportar:hover { background: #0A1E3B; }
+
+        .contenedor-tabla {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            border: 1px solid var(--gris-borde);
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        thead {
+            background: #F8FAFD;
+            border-bottom: 2px solid var(--gris-borde);
+        }
+
+        th {
+            padding: 12px 16px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--texto-secundario);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--gris-borde);
+            color: var(--texto);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #FAFBFD; }
+
+        .badge-placa {
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--azul-oscuro);
+            background: var(--azul-suave);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .badge-codigo {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--verde);
+            background: var(--verde-suave);
+            padding: 2px 7px;
+            border-radius: 999px;
+            margin-left: 6px;
+        }
+
+        .text-right { text-align: right; }
+
+        .estado-vacio {
+            text-align: center;
+            padding: 42px 20px;
+            color: var(--texto-secundario);
+        }
+        .estado-vacio svg {
+            width: 48px; height: 48px; stroke: #BAC4D2; margin-bottom: 10px;
+        }
+
+        /* Notificación Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            background: #143A6E;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 200;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            aside.sidebar {
+                transform: translateX(-100%);
+            }
+            aside.sidebar.abierto {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.activo {
+                display: block;
+            }
+            .layout-principal {
+                margin-left: 0;
+            }
+            .btn-menu-movil {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay para móvil -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- ================= SIDENAV A LA IZQUIERDA ================= -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="solSidebar" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#3FA535"/>
+                        <stop offset="1" stop-color="#F2E205"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="24" cy="13" r="10" fill="url(#solSidebar)"/>
+                <path d="M6 44 L17 22 L22 22 L13 40 L35 40 L26 22 L31 22 L42 44 Z" fill="#fff"/>
+            </svg>
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Filtrar por Fecha (Opcional)</label>
-                <input type="date" id="fechaFiltro" class="block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:ring-blue-500 focus:border-blue-500">
-                <p class="text-xs text-gray-400 mt-1">Deja el campo vacío para descargar todo el historial.</p>
+                <strong>INTERASEO</strong>
+                <span>Gestión de Flota</span>
             </div>
-            <button id="btnDescargar" class="w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-black transition shadow-md">
-                Descargar Reporte CSV
-            </button>
         </div>
+
+        <nav class="sidebar-menu">
+            <span class="menu-categoria">Módulos</span>
+            
+            <!-- Botón Sidenav para consultar reportes -->
+            <button id="navReportes" class="btn-nav">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Consultar Reportes</span>
+            </button>
+
+            <!-- Botón para ir al formulario del conductor -->
+            <a href="index.html" class="btn-nav">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span>Formulario Conductor</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            Panel Administrativo v1.0<br>
+            Interaseo S.A.S. E.S.P.
+        </div>
+    </aside>
+
+    <!-- ================= CONTENEDOR DERECHO ================= -->
+    <div class="layout-principal">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <button id="btnAbrirMenu" class="btn-menu-movil" aria-label="Abrir Menú">☰</button>
+                <div class="topbar-titulo">
+                    <h2>Centro de Control de Flota</h2>
+                    <span>Supervisión operativa y kilometraje</span>
+                </div>
+            </div>
+            <div class="badge-conectado">
+                Supabase Conectado
+            </div>
+        </header>
+
+        <main class="contenido">
+
+            <!-- 1. VISTA DE BIENVENIDA (Inicial, sin panel directo abierto) -->
+            <section id="vistaBienvenida">
+                <div class="tarjeta-bienvenida">
+                    <div class="icono-bienvenida">
+                        <svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <h3>Panel de Administración</h3>
+                    <p>Bienvenido al módulo de auditoría de flota. Presiona el botón del menú lateral a la izquierda o el botón a continuación para abrir los filtros y generar reportes detallados por fecha o por móvil.</p>
+                    <button id="btnIrReportes" class="btn-cta-reporte">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        Abrir Consulta de Reportes
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2. VISTA DE CONSULTA DE REPORTES (Se activa con el botón) -->
+            <section id="vistaReportes">
+                
+                <!-- Tarjeta de Filtros -->
+                <div class="tarjeta-filtros">
+                    <h2 class="titulo-seccion">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        Filtros de Consulta
+                    </h2>
+                    <p class="sub-seccion">Filtra el historial de la flota por vehículo (móvil) o por rango de fechas.</p>
+
+                    <div class="grid-filtros">
+                        <!-- Filtro Móvil / Vehículo -->
+                        <div class="grupo-campo">
+                            <label for="filtroVehiculo">Móvil / Vehículo</label>
+                            <select id="filtroVehiculo">
+                                <option value="">Todas las móviles (Flota completa)</option>
+                            </select>
+                        </div>
+
+                        <!-- Fecha Desde -->
+                        <div class="grupo-campo">
+                            <label for="fechaDesde">Fecha Desde</label>
+                            <input type="date" id="fechaDesde">
+                        </div>
+
+                        <!-- Fecha Hasta -->
+                        <div class="grupo-campo">
+                            <label for="fechaHasta">Fecha Hasta</label>
+                            <input type="date" id="fechaHasta">
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="acciones-filtros">
+                        <button id="btnConsultar" class="btn-consultar">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            Consultar Reportes
+                        </button>
+                        <button id="btnLimpiar" class="btn-limpiar" type="button">
+                            Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel de Resultados (oculto hasta presionar Consultar) -->
+                <div id="panelResultados" style="display: none;">
+                    
+                    <!-- KPIs -->
+                    <div class="metricas-grid">
+                        <div class="tarjeta-metrica">
+                            <span class="kpi-label">Registros encontrados</span>
+                            <span class="kpi-valor" id="metricTotal">0</span>
+                        </div>
+                        <div class="tarjeta-metrica">
+                            <span class="kpi-label">Móviles analizadas</span>
+                            <span class="kpi-valor" id="metricMoviles">0</span>
+                        </div>
+                        <div class="tarjeta-metrica">
+                            <span class="kpi-label">Kilómetros acumulados</span>
+                            <span class="kpi-valor" id="metricKm">0</span>
+                        </div>
+                        <div class="tarjeta-metrica">
+                            <span class="kpi-label">Horas motor totales</span>
+                            <span class="kpi-valor" id="metricHoras">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Cabecera de Tabla -->
+                    <div class="barra-tabla">
+                        <h3>Registros de Operación</h3>
+                        <button id="btnExportar" class="btn-exportar">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Exportar a Excel / CSV
+                        </button>
+                    </div>
+
+                    <!-- Tabla de Resultados -->
+                    <div class="contenedor-tabla">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha y Hora</th>
+                                    <th>Móvil / Placa</th>
+                                    <th>Conductor</th>
+                                    <th>Ruta</th>
+                                    <th class="text-right">Kilometraje</th>
+                                    <th class="text-right">Horas Motor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTabla">
+                                <!-- Filas dinámicas -->
+                            </tbody>
+                        </table>
+                        <div id="sinResultados" class="estado-vacio" style="display: none;">
+                            <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.8"></circle><line x1="12" y1="8" x2="12" y2="12" stroke-width="1.8"></line><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line></svg>
+                            <p style="font-weight: 600;">No se encontraron registros con los filtros seleccionados.</p>
+                            <p style="font-size: 0.85rem; margin-top: 4px;">Modifica las fechas o la móvil para consultar otro periodo.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
     </div>
 
+    <div id="toast" class="toast"></div>
+
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { supabase } from "./supabase.js";
 
-        // PEGA AQUÍ TU FIREBASECONFIG
-        const firebaseConfig = {
-            apiKey: "AIzaSyC6ZApOI4Q2llDSkblPYnK5wcQ_hxuOkX8",
-            authDomain: "app-gestion-de-flota.firebaseapp.com",
-            projectId: "app-gestion-de-flota.firebasestorage.app",
-            essagingSenderId: "801593641234",
-            appId: "1:801593641234:web:36812ab0499b1bc549cbcb",
-            measurementId: "G-BG9TXV3XXM"
-        };
+        // Elementos UI
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const btnAbrirMenu = document.getElementById('btnAbrirMenu');
+        const navReportes = document.getElementById('navReportes');
+        const btnIrReportes = document.getElementById('btnIrReportes');
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const vistaBienvenida = document.getElementById('vistaBienvenida');
+        const vistaReportes = document.getElementById('vistaReportes');
+        const panelResultados = document.getElementById('panelResultados');
 
-        document.getElementById('btnDescargar').addEventListener('click', async () => {
-            const fechaFiltro = document.getElementById('fechaFiltro').value;
-            const btn = document.getElementById('btnDescargar');
-            btn.textContent = "Procesando...";
-            btn.disabled = true;
+        const filtroVehiculo = document.getElementById('filtroVehiculo');
+        const fechaDesde = document.getElementById('fechaDesde');
+        const fechaHasta = document.getElementById('fechaHasta');
+        const btnConsultar = document.getElementById('btnConsultar');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const btnExportar = document.getElementById('btnExportar');
+        const cuerpoTabla = document.getElementById('cuerpoTabla');
+        const sinResultados = document.getElementById('sinResultados');
+        const toast = document.getElementById('toast');
+
+        // Métricas
+        const metricTotal = document.getElementById('metricTotal');
+        const metricMoviles = document.getElementById('metricMoviles');
+        const metricKm = document.getElementById('metricKm');
+        const metricHoras = document.getElementById('metricHoras');
+
+        let vehiculosMap = new Map();
+        let datosActuales = [];
+
+        function mostrarToast(mensaje) {
+            toast.textContent = mensaje;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // Abrir y cerrar menú lateral en móvil
+        function toggleSidebar(abrir) {
+            if (abrir) {
+                sidebar.classList.add('abierto');
+                sidebarOverlay.classList.add('activo');
+            } else {
+                sidebar.classList.remove('abierto');
+                sidebarOverlay.classList.remove('activo');
+            }
+        }
+        btnAbrirMenu.addEventListener('click', () => toggleSidebar(true));
+        sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
+
+        // Activar la vista de reportes desde el sidenav
+        function activarVistaReportes() {
+            navReportes.classList.add('activo');
+            vistaBienvenida.style.display = 'none';
+            vistaReportes.style.display = 'block';
+            toggleSidebar(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navReportes.addEventListener('click', activarVistaReportes);
+        btnIrReportes.addEventListener('click', activarVistaReportes);
+
+        // Cargar lista de vehículos en el selector
+        async function cargarVehiculos() {
+            const { data, error } = await supabase
+                .from('vehiculos')
+                .select('codigo, placa')
+                .order('codigo');
+
+            if (error) {
+                console.error("Error al cargar vehículos:", error);
+                return;
+            }
+
+            data.forEach(v => {
+                vehiculosMap.set(v.placa, v.codigo);
+            });
+
+            filtroVehiculo.innerHTML = '<option value="">Todas las móviles (Flota completa)</option>' +
+                data.map(v => `<option value="${v.placa}">${v.codigo ? v.codigo + ' · ' : ''}${v.placa}</option>`).join('');
+        }
+
+        function formatearFecha(isoString) {
+            if (!isoString) return '-';
+            const f = new Date(isoString);
+            return f.toLocaleDateString('es-CO', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Consultar registros bajo demanda
+        async function consultarReportes() {
+            btnConsultar.disabled = true;
+            btnConsultar.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg>
+                Consultando...
+            `;
 
             try {
-                const querySnapshot = await getDocs(collection(db, "registros"));
-                let datos = [];
+                let query = supabase
+                    .from('registros')
+                    .select('*')
+                    .order('fecha', { ascending: false });
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const fechaLocal = new Date(data.fecha).toISOString().split('T')[0];
-                    if (!fechaFiltro || fechaLocal === fechaFiltro) {
-                        datos.push(data);
-                    }
-                });
-
-                if (datos.length === 0) {
-                    alert("No hay registros para la fecha seleccionada.");
-                    btn.textContent = "Descargar Reporte CSV";
-                    btn.disabled = false;
-                    return;
+                if (filtroVehiculo.value) {
+                    query = query.eq('placa', filtroVehiculo.value);
+                }
+                if (fechaDesde.value) {
+                    query = query.gte('fecha', new Date(fechaDesde.value + 'T00:00:00').toISOString());
+                }
+                if (fechaHasta.value) {
+                    query = query.lte('fecha', new Date(fechaHasta.value + 'T23:59:59.999').toISOString());
                 }
 
-                let csvContent = "data:text/csv;charset=utf-8,Conductor,Placa,Kilometros,Horas,Fecha\n";
-                datos.forEach(row => {
-                    // Validar si existe el nombre por si hay registros antiguos
-                    const nombreConductor = row.nombre ? row.nombre : "No registrado";
-                    csvContent += `${nombreConductor},${row.placa},${row.km},${row.horas},${new Date(row.fecha).toLocaleString()}\n`;
-                });
+                const { data, error } = await query;
+                if (error) throw error;
 
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `reporte_flota_${fechaFiltro || 'completo'}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch (error) {
-                console.error("Error al descargar: ", error);
-                alert("Hubo un error al generar el reporte.");
+                datosActuales = data || [];
+                renderizarResultados();
+                panelResultados.style.display = 'block';
+                panelResultados.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (err) {
+                console.error("Error al consultar:", err);
+                mostrarToast("Error de conexión al obtener los reportes.");
             } finally {
-                btn.textContent = "Descargar Reporte CSV";
-                btn.disabled = false;
+                btnConsultar.disabled = false;
+                btnConsultar.innerHTML = `
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    Consultar Reportes
+                `;
             }
+        }
+
+        function renderizarResultados() {
+            metricTotal.textContent = datosActuales.length.toLocaleString();
+
+            const movilesUnicas = new Set(datosActuales.map(r => r.placa));
+            metricMoviles.textContent = movilesUnicas.size.toLocaleString();
+
+            const sumKm = datosActuales.reduce((acc, r) => acc + (Number(r.km) || 0), 0);
+            const sumHoras = datosActuales.reduce((acc, r) => acc + (Number(r.horas) || 0), 0);
+            metricKm.textContent = sumKm.toLocaleString();
+            metricHoras.textContent = sumHoras.toLocaleString();
+
+            if (!datosActuales.length) {
+                cuerpoTabla.innerHTML = '';
+                sinResultados.style.display = 'block';
+                return;
+            }
+
+            sinResultados.style.display = 'none';
+            cuerpoTabla.innerHTML = datosActuales.map(r => {
+                const codigo = vehiculosMap.get(r.placa) || '';
+                return `
+                    <tr>
+                        <td style="font-size: 0.85rem; color: var(--texto-secundario);">${formatearFecha(r.fecha)}</td>
+                        <td>
+                            <span class="badge-placa">${r.placa}</span>
+                            ${codigo ? `<span class="badge-codigo">${codigo}</span>` : ''}
+                        </td>
+                        <td style="font-weight: 600;">${r.nombre}</td>
+                        <td>${r.ruta || '-'}</td>
+                        <td class="text-right" style="font-weight: 600;">${Number(r.km).toLocaleString()}</td>
+                        <td class="text-right" style="font-weight: 600;">${Number(r.horas).toLocaleString()}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Exportar a CSV
+        const escapeCSV = val => `"${String(val ?? '').replace(/"/g, '""')}"`;
+
+        function exportarCSV() {
+            if (!datosActuales.length) {
+                mostrarToast('No hay datos para exportar.');
+                return;
+            }
+
+            const encabezados = ['Fecha y Hora', 'Placa', 'Codigo Movil', 'Conductor', 'Ruta', 'Kilometraje', 'Horas Motor'];
+            const filas = datosActuales.map(r => [
+                formatearFecha(r.fecha),
+                r.placa,
+                vehiculosMap.get(r.placa) || '',
+                r.nombre,
+                r.ruta,
+                r.km,
+                r.horas
+            ]);
+
+            const contenido = '\uFEFF' + [encabezados, ...filas]
+                .map(fila => fila.map(escapeCSV).join(','))
+                .join('\n');
+
+            const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const vehiculoNom = filtroVehiculo.value || 'flota_completa';
+            a.download = `reporte_interaseo_${vehiculoNom}_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            mostrarToast("Reporte descargado exitosamente.");
+        }
+
+        btnLimpiar.addEventListener('click', () => {
+            filtroVehiculo.value = '';
+            fechaDesde.value = '';
+            fechaHasta.value = '';
+            panelResultados.style.display = 'none';
+            datosActuales = [];
         });
+
+        btnConsultar.addEventListener('click', consultarReportes);
+        btnExportar.addEventListener('click', exportarCSV);
+
+        // Inicializar
+        cargarVehiculos();
     </script>
 </body>
 </html>
