@@ -136,12 +136,261 @@
         }
 
         .sidebar-footer {
-            padding: 18px 20px;
+            padding: 14px 16px 18px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
         }
+
+        .admin-sesion {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .admin-sesion-etiqueta {
+            display: block;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 2px;
+        }
+        .admin-sesion-correo {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 9px;
+        }
+        .btn-cerrar-sesion {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 7px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-cerrar-sesion:hover {
+            background: rgba(217, 45, 32, 0.85);
+            border-color: rgba(217, 45, 32, 0.9);
+        }
+
+        .btn-abrir-login {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(63, 165, 53, 0.55);
+            background: rgba(63, 165, 53, 0.18);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-abrir-login:hover {
+            background: var(--verde);
+            border-color: var(--verde);
+        }
+
+        .admin-sesion-etiqueta.es-admin {
+            color: #7CE06E;
+            font-weight: 700;
+        }
+
+        .candado-nav {
+            margin-left: auto;
+            opacity: 0.65;
+            width: 15px !important;
+            height: 15px !important;
+        }
+
+        /* Tarjeta de acceso restringido en Gestión de Vehículos (modo consulta) */
+        .tarjeta-bloqueo-admin {
+            background: var(--blanco);
+            border-radius: 18px;
+            padding: 42px 28px;
+            max-width: 560px;
+            margin: 24px auto;
+            text-align: center;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-borde);
+            position: relative;
+            overflow: hidden;
+        }
+        .tarjeta-bloqueo-admin::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--azul), var(--verde));
+        }
+        .icono-candado-grande {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: var(--azul-suave);
+            color: var(--azul);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+        }
+        .tarjeta-bloqueo-admin h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--azul-oscuro);
+            margin-bottom: 8px;
+        }
+        .tarjeta-bloqueo-admin p {
+            font-size: 0.92rem;
+            color: var(--texto-secundario);
+            line-height: 1.55;
+            margin-bottom: 22px;
+        }
+
+        /* ================= MODAL DE LOGIN ADMINISTRADOR ================= */
+        #modalLogin {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(10, 30, 59, 0.62);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #modalLogin.visible {
+            display: flex;
+        }
+
+        .tarjeta-login {
+            width: 100%;
+            max-width: 420px;
+            background: var(--blanco);
+            border-radius: 20px;
+            padding: 32px 28px 26px;
+            box-shadow: 0 26px 60px rgba(8, 22, 46, 0.45);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.25s ease-out;
+        }
+        .tarjeta-login::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--verde), var(--amarillo));
+        }
+
+        .btn-cerrar-modal {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--gris-borde);
+            background: var(--fondo);
+            color: var(--texto-secundario);
+            font-size: 1.15rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .btn-cerrar-modal:hover {
+            background: #E4EAF2;
+            color: var(--azul-oscuro);
+        }
+
+        .login-marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .login-marca svg {
+            width: 42px;
+            height: 42px;
+            padding: 6px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            flex-shrink: 0;
+        }
+        .login-marca strong {
+            display: block;
+            font-size: 1.02rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: var(--azul-oscuro);
+        }
+        .login-marca span {
+            font-size: 0.78rem;
+            color: var(--texto-secundario);
+        }
+
+        .tarjeta-login h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--azul-oscuro);
+            margin-bottom: 4px;
+        }
+        .tarjeta-login .login-sub {
+            font-size: 0.86rem;
+            color: var(--texto-secundario);
+            margin-bottom: 18px;
+            line-height: 1.45;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .btn-login {
+            width: 100%;
+            margin-top: 4px;
+            background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
+            color: #fff;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.94rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 22px -8px rgba(20, 58, 110, 0.55);
+            transition: all 0.2s;
+        }
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 26px -8px rgba(20, 58, 110, 0.7);
+        }
+        .btn-login:disabled { opacity: 0.6; cursor: wait; }
 
         /* Overlay móvil */
         .sidebar-overlay {
@@ -222,91 +471,464 @@
 
         /* Área de contenido */
         main.contenido {
-            padding: 30px;
-            max-width: 1100px;
+            padding: 28px 30px 40px;
+            max-width: 1220px;
             width: 100%;
             margin: 0 auto;
             flex: 1;
         }
 
-        /* Pantalla de Inicio / Bienvenida (antes de presionar Reportes) */
-        #vistaBienvenida {
-            text-align: center;
-            padding: 60px 20px;
+        /* ================= VISTA PRINCIPAL (MENÚ PRINCIPAL) ================= */
+        #vistaPrincipal {
             animation: fadeIn 0.35s ease-out;
         }
 
-        .tarjeta-bienvenida {
-            background: var(--blanco);
-            border-radius: 20px;
-            padding: 46px 30px;
-            max-width: 620px;
-            margin: 0 auto;
-            box-shadow: var(--sombra);
-            border: 1px solid var(--gris-borde);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tarjeta-bienvenida::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--verde), var(--amarillo));
-        }
-
-        .icono-bienvenida {
-            width: 68px;
-            height: 68px;
-            background: var(--azul-suave);
-            border-radius: 50%;
+        .cabecera-principal {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--azul);
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
         }
 
-        .tarjeta-bienvenida h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .cabecera-principal h1 {
+            font-size: 1.45rem;
+            font-weight: 800;
             color: var(--azul-oscuro);
-            margin-bottom: 8px;
+            letter-spacing: -0.01em;
         }
 
-        .tarjeta-bienvenida p {
-            font-size: 0.95rem;
+        .cabecera-principal p {
+            font-size: 0.9rem;
             color: var(--texto-secundario);
-            line-height: 1.5;
-            margin-bottom: 26px;
+            margin-top: 3px;
         }
+
+        .acciones-principal {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secundario {
+            background: var(--blanco);
+            color: var(--azul-oscuro);
+            border: 1.5px solid var(--gris-borde);
+            padding: 10px 16px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 11px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-secundario:hover {
+            border-color: var(--azul);
+            background: var(--azul-suave);
+        }
+        .btn-secundario:disabled { opacity: 0.6; cursor: wait; }
 
         .btn-cta-reporte {
             background: linear-gradient(135deg, var(--azul) 0%, var(--azul-oscuro) 100%);
             color: #fff;
             border: none;
-            padding: 14px 28px;
-            font-size: 1rem;
+            padding: 11px 18px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            border-radius: 11px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 20px -8px rgba(20, 58, 110, 0.55);
+            transition: all 0.2s;
+        }
+        .btn-cta-reporte:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px -8px rgba(20, 58, 110, 0.65);
+        }
+
+        .tarjeta-metrica.acento-azul { border-top: 3px solid var(--azul); }
+        .tarjeta-metrica.acento-verde { border-top: 3px solid var(--verde); }
+        .tarjeta-metrica.acento-amarillo { border-top: 3px solid #D9B800; }
+        .tarjeta-metrica.acento-oscuro { border-top: 3px solid var(--azul-oscuro); }
+
+        .tarjeta-metrica .kpi-sub {
+            font-size: 0.78rem;
+            color: var(--texto-secundario);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Tarjeta de Directorio General de Vehículos */
+        .tarjeta-flota {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 22px 24px 24px;
+            box-shadow: var(--sombra);
+            border: 1px solid var(--gris-borde);
+        }
+
+        .flota-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .flota-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contador-flota {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--texto-secundario);
+            background: var(--fondo);
+            padding: 5px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--gris-borde);
+        }
+
+        /* Chips de categorías de vehículos */
+        .chips-categorias {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chip-cat {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            border: 1px solid var(--gris-borde);
+            background: #F8FAFD;
+            color: var(--texto-secundario);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .chip-cat:hover {
+            border-color: var(--azul);
+            color: var(--azul-oscuro);
+            background: var(--azul-suave);
+        }
+        .chip-cat.activo {
+            background: var(--azul-oscuro);
+            color: #fff;
+            border-color: var(--azul-oscuro);
+        }
+        .chip-cat .chip-num {
+            background: rgba(20, 58, 110, 0.1);
+            color: var(--azul-oscuro);
+            padding: 1px 7px;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+        }
+        .chip-cat.activo .chip-num {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        /* Barra de búsqueda y filtro de estado */
+        .controles-flota {
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .campo-busqueda {
+            position: relative;
+        }
+        .campo-busqueda svg {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 17px;
+            height: 17px;
+            color: var(--texto-secundario);
+            pointer-events: none;
+        }
+        .campo-busqueda input {
+            width: 100%;
+            padding: 11px 14px 11px 38px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--texto);
+            border: 1.5px solid var(--gris-borde);
+            border-radius: 11px;
+            background: #FAFCFE;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .campo-busqueda input:focus {
+            border-color: var(--azul);
+            background: var(--blanco);
+            box-shadow: 0 0 0 4px rgba(29, 79, 145, 0.12);
+        }
+
+        .badge-tipo {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--azul);
+            background: var(--azul-suave);
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 3px;
+        }
+
+        .desc-vehiculo {
+            font-size: 0.82rem;
+            color: var(--texto-secundario);
+            line-height: 1.35;
+        }
+
+        .badge-estado {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+        .badge-estado.con-reporte {
+            color: #26731E;
+            background: var(--verde-suave);
+        }
+        .badge-estado.sin-reporte {
+            color: #7A8699;
+            background: #F1F4F8;
+        }
+
+        .btn-ver-historial {
+            background: var(--azul-suave);
+            color: var(--azul-oscuro);
+            border: none;
+            padding: 6px 11px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.18s;
+        }
+        .btn-ver-historial:hover {
+            background: var(--azul);
+            color: #fff;
+        }
+
+        .badge-conectado.error {
+            color: #B42318;
+            background: #FEE4E2;
+        }
+        .badge-conectado.error::before {
+            background: #D92D20;
+            animation: none;
+        }
+
+        /* Vista de Consulta de Reportes y Gestión de Vehículos */
+        #vistaReportes,
+        #vistaVehiculos {
+            display: none;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        .grid-form-vehiculo {
+            display: grid;
+            grid-template-columns: 180px 180px 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .campo-texto {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            color: var(--texto);
+            border: 1.5px solid var(--gris-borde);
+            border-radius: 12px;
+            background: #FAFCFE;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .campo-texto:focus {
+            border-color: var(--azul);
+            background: var(--blanco);
+            box-shadow: 0 0 0 4px rgba(29, 79, 145, 0.12);
+        }
+        .campo-mayus {
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-agregar {
+            background: linear-gradient(135deg, var(--verde) 0%, #2D8625 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 22px;
+            font-family: inherit;
+            font-size: 0.92rem;
             font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 24px -8px rgba(20, 58, 110, 0.5);
+            gap: 8px;
+            box-shadow: 0 8px 18px -6px rgba(45, 134, 37, 0.5);
             transition: all 0.2s;
         }
-        .btn-cta-reporte:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px -8px rgba(20, 58, 110, 0.65);
+        .btn-agregar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px -6px rgba(45, 134, 37, 0.65);
+        }
+        .btn-agregar:disabled { opacity: 0.6; cursor: wait; }
+
+        .btn-eliminar {
+            background: #FEE4E2;
+            color: #B42318;
+            border: 1px solid #FECDCA;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: all 0.18s;
+        }
+        .btn-eliminar:hover {
+            background: #D92D20;
+            border-color: #D92D20;
+            color: #fff;
         }
 
-        /* Vista de Consulta de Reportes (desplegable) */
-        #vistaReportes {
+        .alerta-inline {
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 0.86rem;
+            font-weight: 500;
+            margin-bottom: 16px;
             display: none;
-            animation: fadeIn 0.35s ease-out;
         }
+        .alerta-inline.exito {
+            display: block;
+            background: var(--verde-suave);
+            color: #26731E;
+            border-left: 4px solid var(--verde);
+        }
+        .alerta-inline.error {
+            display: block;
+            background: #FEE4E2;
+            color: #B42318;
+            border-left: 4px solid #D92D20;
+        }
+
+        /* Modal de confirmación */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 30, 59, 0.55);
+            backdrop-filter: blur(2px);
+            z-index: 250;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+        }
+        .modal-backdrop.abierto {
+            display: flex;
+        }
+        .modal-caja {
+            background: var(--blanco);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 24px 48px rgba(10, 30, 59, 0.3);
+            border: 1px solid var(--gris-borde);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-caja h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--azul-oscuro);
+            margin-bottom: 8px;
+        }
+        .modal-caja p {
+            font-size: 0.9rem;
+            color: var(--texto-secundario);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .modal-detalle {
+            background: var(--fondo);
+            border: 1px solid var(--gris-borde);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.88rem;
+        }
+        .modal-aviso {
+            background: #FEF3F2;
+            border: 1px solid #FECDCA;
+            color: #B42318;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.83rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .modal-acciones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-peligro {
+            background: #D92D20;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .btn-peligro:hover { background: #B42318; }
+        .btn-peligro:disabled { opacity: 0.45; cursor: not-allowed; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -496,7 +1118,7 @@
             background: var(--blanco);
             border-radius: var(--radio);
             border: 1px solid var(--gris-borde);
-            overflow: hidden;
+            overflow-x: auto;
             box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
         }
 
@@ -592,10 +1214,57 @@
             .btn-menu-movil {
                 display: block;
             }
+            main.contenido {
+                padding: 20px 16px 32px;
+            }
+            .controles-flota,
+            .grid-form-vehiculo {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ================= MODAL DE LOGIN ADMINISTRADOR ================= -->
+    <div id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="tituloModalLogin">
+        <div class="tarjeta-login">
+            <button id="btnCerrarModalLogin" class="btn-cerrar-modal" type="button" aria-label="Cerrar">×</button>
+            <div class="login-marca">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="solLogin" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#3FA535"/>
+                            <stop offset="1" stop-color="#F2E205"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="24" cy="13" r="10" fill="url(#solLogin)"/>
+                    <path d="M6 44 L17 22 L22 22 L13 40 L35 40 L26 22 L31 22 L42 44 Z" fill="#fff"/>
+                </svg>
+                <div>
+                    <strong>INTERASEO</strong>
+                    <span>Acceso Administrativo</span>
+                </div>
+            </div>
+
+            <h1 id="tituloModalLogin">Iniciar sesión (Admin)</h1>
+            <p class="login-sub">Solo el usuario administrador autorizado puede agregar o eliminar vehículos de la base de datos.</p>
+
+            <div id="alertaLogin" class="alerta-inline" role="alert"></div>
+
+            <form id="formLogin" class="login-form">
+                <div class="grupo-campo">
+                    <label for="loginEmail">Correo de administrador</label>
+                    <input type="email" id="loginEmail" class="campo-texto" required autocomplete="username" placeholder="admin@interaseo.com">
+                </div>
+                <div class="grupo-campo">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" class="campo-texto" required autocomplete="current-password" placeholder="••••••••">
+                </div>
+                <button id="btnLogin" class="btn-login" type="submit">Ingresar como Administrador</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Overlay para móvil -->
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
@@ -621,11 +1290,24 @@
 
         <nav class="sidebar-menu">
             <span class="menu-categoria">Módulos</span>
-            
+
+            <!-- Botón Sidenav para el Menú Principal (Vista Principal) -->
+            <button id="navPrincipal" class="btn-nav activo" type="button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+                <span>Menú Principal</span>
+            </button>
+
             <!-- Botón Sidenav para consultar reportes -->
-            <button id="navReportes" class="btn-nav">
+            <button id="navReportes" class="btn-nav" type="button">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 <span>Consultar Reportes</span>
+            </button>
+
+            <!-- Botón Sidenav para gestionar vehículos (solo admin) -->
+            <button id="navVehiculos" class="btn-nav" type="button">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <span>Gestión de Vehículos</span>
+                <svg id="iconoCandadoVehiculos" class="candado-nav" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
             </button>
 
             <!-- Botón para ir al formulario del conductor -->
@@ -636,8 +1318,22 @@
         </nav>
 
         <div class="sidebar-footer">
-            Panel Administrativo v1.0<br>
-            Interaseo S.A.S. E.S.P.
+            <div class="admin-sesion">
+                <span id="rolEtiqueta" class="admin-sesion-etiqueta">Modo: Solo consulta</span>
+                <span id="adminCorreo" class="admin-sesion-correo">Sin sesión de admin</span>
+                <button id="btnAbrirLogin" class="btn-abrir-login" type="button">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Iniciar sesión (Admin)
+                </button>
+                <button id="btnCerrarSesion" class="btn-cerrar-sesion" type="button" style="display: none;">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    Cerrar sesión
+                </button>
+            </div>
+            <div style="text-align: center;">
+                Panel Administrativo v1.3<br>
+                Interaseo S.A.S. E.S.P.
+            </div>
         </div>
     </aside>
 
@@ -649,29 +1345,114 @@
             <div style="display: flex; align-items: center; gap: 14px;">
                 <button id="btnAbrirMenu" class="btn-menu-movil" aria-label="Abrir Menú">☰</button>
                 <div class="topbar-titulo">
-                    <h2>Centro de Control de Flota</h2>
-                    <span>Supervisión operativa y kilometraje</span>
+                    <h2 id="topbarTitulo">Centro de Control de Flota</h2>
+                    <span id="topbarSubtitulo">Información general de vehículos</span>
                 </div>
             </div>
-            <div class="badge-conectado">
+            <div id="badgeEstadoConexion" class="badge-conectado">
                 Supabase Conectado
             </div>
         </header>
 
         <main class="contenido">
 
-            <!-- 1. VISTA DE BIENVENIDA (Inicial, sin panel directo abierto) -->
-            <section id="vistaBienvenida">
-                <div class="tarjeta-bienvenida">
-                    <div class="icono-bienvenida">
-                        <svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <!-- 1. VISTA PRINCIPAL (Menú Principal: información general de la flota) -->
+            <section id="vistaPrincipal">
+                <div class="cabecera-principal">
+                    <div>
+                        <h1>Resumen General de la Flota</h1>
+                        <p>Estado consolidado, categoría y último reporte de cada vehículo registrado.</p>
                     </div>
-                    <h3>Panel de Administración</h3>
-                    <p>Bienvenido al módulo de auditoría de flota. Presiona el botón del menú lateral a la izquierda o el botón a continuación para abrir los filtros y generar reportes detallados por fecha o por móvil.</p>
-                    <button id="btnIrReportes" class="btn-cta-reporte">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        Abrir Consulta de Reportes
-                    </button>
+                    <div class="acciones-principal">
+                        <button id="btnActualizarResumen" class="btn-secundario" type="button">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            Actualizar
+                        </button>
+                        <button id="btnIrReportes" class="btn-cta-reporte" type="button">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            Consultar Reportes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPIs Generales de Flota -->
+                <div class="metricas-grid">
+                    <div class="tarjeta-metrica acento-azul">
+                        <span class="kpi-label">Flota Registrada</span>
+                        <span class="kpi-valor" id="kpiTotalVehiculos">--</span>
+                        <span class="kpi-sub" id="kpiTotalVehiculosSub">Cargando vehículos...</span>
+                    </div>
+                    <div class="tarjeta-metrica acento-verde">
+                        <span class="kpi-label">Con Reportes</span>
+                        <span class="kpi-valor" id="kpiConReporte">--</span>
+                        <span class="kpi-sub" id="kpiConReporteSub">Móviles con actividad</span>
+                    </div>
+                    <div class="tarjeta-metrica acento-amarillo">
+                        <span class="kpi-label">Reportes Hoy</span>
+                        <span class="kpi-valor" id="kpiReportesHoy">--</span>
+                        <span class="kpi-sub" id="kpiReportesHoySub">Total histórico: --</span>
+                    </div>
+                    <div class="tarjeta-metrica acento-oscuro">
+                        <span class="kpi-label">Última Actividad</span>
+                        <span class="kpi-valor" id="kpiUltimaActividad" style="font-size: 1.15rem; padding-top: 4px;">--</span>
+                        <span class="kpi-sub" id="kpiUltimaActividadSub">Sin registros aún</span>
+                    </div>
+                </div>
+
+                <!-- Directorio y Estado General de Vehículos -->
+                <div class="tarjeta-flota">
+                    <div class="flota-header">
+                        <h3>
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            Información General de Vehículos
+                        </h3>
+                        <span id="contadorFlota" class="contador-flota">Cargando...</span>
+                    </div>
+
+                    <!-- Chips de Distribución por Categoría -->
+                    <div id="chipsCategorias" class="chips-categorias"></div>
+
+                    <!-- Búsqueda y Filtro de Estado -->
+                    <div class="controles-flota">
+                        <div class="campo-busqueda">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="busquedaFlota" placeholder="Buscar por placa, código, descripción o conductor...">
+                        </div>
+                        <select id="filtroEstadoFlota" aria-label="Filtrar por estado de reporte">
+                            <option value="todos">Todos los estados</option>
+                            <option value="con_reporte">Con reporte registrado</option>
+                            <option value="sin_reporte">Sin reportes aún</option>
+                        </select>
+                    </div>
+
+                    <!-- Tabla General de Vehículos -->
+                    <div class="contenedor-tabla">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Móvil / Placa</th>
+                                    <th>Tipo y Descripción</th>
+                                    <th class="text-right">Último KM</th>
+                                    <th class="text-right">Últ. Horas</th>
+                                    <th>Último Conductor / Ruta</th>
+                                    <th>Último Reporte</th>
+                                    <th class="text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTablaFlota">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 32px; color: var(--texto-secundario);">
+                                        Cargando información de la flota...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="sinVehiculosFlota" class="estado-vacio" style="display: none;">
+                            <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.8"></circle><line x1="12" y1="8" x2="12" y2="12" stroke-width="1.8"></line><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line></svg>
+                            <p style="font-weight: 600;">No hay vehículos que coincidan con la búsqueda.</p>
+                            <p style="font-size: 0.85rem; margin-top: 4px;">Prueba limpiando el texto o cambiando la categoría seleccionada.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -780,7 +1561,121 @@
 
             </section>
 
+            <!-- 3. VISTA DE GESTIÓN DE VEHÍCULOS (Agregar / Eliminar de la BD — solo Admin) -->
+            <section id="vistaVehiculos">
+
+                <!-- Aviso cuando el usuario NO es administrador -->
+                <div id="bloqueoSoloAdmin" class="tarjeta-bloqueo-admin">
+                    <div class="icono-candado-grande">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <h2 id="bloqueoAdminTitulo">Acceso exclusivo de Administrador</h2>
+                    <p id="bloqueoAdminTexto">En este panel todos los usuarios pueden consultar el Menú Principal y los Reportes, pero solo el usuario administrador autorizado puede agregar o eliminar vehículos de la base de datos.</p>
+                    <button id="btnLoginDesdeVehiculos" class="btn-cta-reporte" type="button">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Iniciar sesión como Administrador
+                    </button>
+                </div>
+
+                <!-- Contenido editable: visible únicamente si esAdmin === true -->
+                <div id="contenidoGestionAdmin" style="display: none;">
+
+                <!-- Tarjeta: Agregar nuevo vehículo -->
+                <div class="tarjeta-filtros">
+                    <h2 class="titulo-seccion">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Agregar Nuevo Vehículo
+                    </h2>
+                    <p class="sub-seccion">Registra una nueva móvil en Supabase para que quede disponible de inmediato en el formulario de conductores y reportes.</p>
+
+                    <div id="alertaVehiculo" class="alerta-inline" role="status"></div>
+
+                    <form id="formNuevoVehiculo" autocomplete="off">
+                        <div class="grid-form-vehiculo">
+                            <div class="grupo-campo">
+                                <label for="nuevoPlaca">Placa *</label>
+                                <input type="text" id="nuevoPlaca" class="campo-texto campo-mayus" required maxlength="15" placeholder="Ej: ABC123">
+                            </div>
+                            <div class="grupo-campo">
+                                <label for="nuevoCodigo">Código / Móvil</label>
+                                <input type="text" id="nuevoCodigo" class="campo-texto campo-mayus" maxlength="20" placeholder="Ej: CP2350">
+                            </div>
+                            <div class="grupo-campo">
+                                <label for="nuevoDescripcion">Descripción</label>
+                                <input type="text" id="nuevoDescripcion" class="campo-texto" maxlength="120" placeholder="Ej: CAMION COMPACTADOR 25Y DAF CF410">
+                            </div>
+                        </div>
+
+                        <div class="acciones-filtros">
+                            <button id="btnAgregarVehiculo" class="btn-agregar" type="submit">
+                                <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Agregar Vehículo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tarjeta: Catálogo actual para revisar o eliminar -->
+                <div class="tarjeta-flota">
+                    <div class="flota-header">
+                        <h3>
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            Catálogo de Vehículos Registrados
+                        </h3>
+                        <span id="contadorGestionVehiculos" class="contador-flota">Cargando...</span>
+                    </div>
+
+                    <div class="campo-busqueda" style="margin-bottom: 16px;">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="busquedaGestionVehiculos" placeholder="Filtrar por placa, código o descripción para encontrar un vehículo...">
+                    </div>
+
+                    <div class="contenedor-tabla">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Placa</th>
+                                    <th>Código / Móvil</th>
+                                    <th>Categoría</th>
+                                    <th>Descripción</th>
+                                    <th class="text-right">Registros</th>
+                                    <th class="text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTablaGestionVehiculos">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 28px; color: var(--texto-secundario);">
+                                        Cargando catálogo...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="sinVehiculosGestion" class="estado-vacio" style="display: none;">
+                            <svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.8"></circle><line x1="12" y1="8" x2="12" y2="12" stroke-width="1.8"></line><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line></svg>
+                            <p style="font-weight: 600;">No se encontraron vehículos con ese filtro.</p>
+                        </div>
+                    </div>
+                </div>
+
+                </div><!-- /contenidoGestionAdmin -->
+
+            </section>
+
         </main>
+    </div>
+
+    <!-- Modal de confirmación para eliminar vehículo -->
+    <div id="modalEliminar" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitulo">
+        <div class="modal-caja">
+            <h3 id="modalEliminarTitulo">Eliminar vehículo</h3>
+            <p>¿Estás seguro de que deseas eliminar este vehículo de la base de datos? Esta acción no se puede deshacer.</p>
+            <div id="modalEliminarDetalle" class="modal-detalle"></div>
+            <div id="modalEliminarAviso" class="modal-aviso"></div>
+            <div class="modal-acciones">
+                <button id="btnCancelarEliminar" class="btn-secundario" type="button">Cancelar</button>
+                <button id="btnConfirmarEliminar" class="btn-peligro" type="button">Sí, eliminar</button>
+            </div>
+        </div>
     </div>
 
     <div id="toast" class="toast"></div>
@@ -788,17 +1683,84 @@
     <script type="module">
         import { supabase } from "./supabase.js";
 
-        // Elementos UI
+        // Elementos de autenticación (Login Admin)
+        const modalLogin = document.getElementById('modalLogin');
+        const btnCerrarModalLogin = document.getElementById('btnCerrarModalLogin');
+        const btnAbrirLogin = document.getElementById('btnAbrirLogin');
+        const btnLoginDesdeVehiculos = document.getElementById('btnLoginDesdeVehiculos');
+        const formLogin = document.getElementById('formLogin');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const btnLogin = document.getElementById('btnLogin');
+        const alertaLogin = document.getElementById('alertaLogin');
+        const rolEtiqueta = document.getElementById('rolEtiqueta');
+        const adminCorreo = document.getElementById('adminCorreo');
+        const btnCerrarSesion = document.getElementById('btnCerrarSesion');
+        const iconoCandadoVehiculos = document.getElementById('iconoCandadoVehiculos');
+        const bloqueoSoloAdmin = document.getElementById('bloqueoSoloAdmin');
+        const bloqueoAdminTitulo = document.getElementById('bloqueoAdminTitulo');
+        const bloqueoAdminTexto = document.getElementById('bloqueoAdminTexto');
+        const contenidoGestionAdmin = document.getElementById('contenidoGestionAdmin');
+
+        let esAdmin = false;
+        let usuarioActual = null;
+        let redirigirAVehiculosAlEntrar = false;
+
+        // Elementos UI generales y navegación
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const btnAbrirMenu = document.getElementById('btnAbrirMenu');
+        const navPrincipal = document.getElementById('navPrincipal');
+        const navVehiculos = document.getElementById('navVehiculos');
         const navReportes = document.getElementById('navReportes');
         const btnIrReportes = document.getElementById('btnIrReportes');
+        const btnActualizarResumen = document.getElementById('btnActualizarResumen');
+        const topbarTitulo = document.getElementById('topbarTitulo');
+        const topbarSubtitulo = document.getElementById('topbarSubtitulo');
+        const badgeEstadoConexion = document.getElementById('badgeEstadoConexion');
 
-        const vistaBienvenida = document.getElementById('vistaBienvenida');
+        const vistaPrincipal = document.getElementById('vistaPrincipal');
+        const vistaVehiculos = document.getElementById('vistaVehiculos');
         const vistaReportes = document.getElementById('vistaReportes');
         const panelResultados = document.getElementById('panelResultados');
 
+        // Elementos Vista Gestión de Vehículos
+        const formNuevoVehiculo = document.getElementById('formNuevoVehiculo');
+        const nuevoPlaca = document.getElementById('nuevoPlaca');
+        const nuevoCodigo = document.getElementById('nuevoCodigo');
+        const nuevoDescripcion = document.getElementById('nuevoDescripcion');
+        const btnAgregarVehiculo = document.getElementById('btnAgregarVehiculo');
+        const alertaVehiculo = document.getElementById('alertaVehiculo');
+        const contadorGestionVehiculos = document.getElementById('contadorGestionVehiculos');
+        const busquedaGestionVehiculos = document.getElementById('busquedaGestionVehiculos');
+        const cuerpoTablaGestionVehiculos = document.getElementById('cuerpoTablaGestionVehiculos');
+        const sinVehiculosGestion = document.getElementById('sinVehiculosGestion');
+
+        // Modal eliminar vehículo
+        const modalEliminar = document.getElementById('modalEliminar');
+        const modalEliminarDetalle = document.getElementById('modalEliminarDetalle');
+        const modalEliminarAviso = document.getElementById('modalEliminarAviso');
+        const btnCancelarEliminar = document.getElementById('btnCancelarEliminar');
+        const btnConfirmarEliminar = document.getElementById('btnConfirmarEliminar');
+        let placaPendienteEliminar = null;
+
+        // Elementos Vista Principal
+        const kpiTotalVehiculos = document.getElementById('kpiTotalVehiculos');
+        const kpiTotalVehiculosSub = document.getElementById('kpiTotalVehiculosSub');
+        const kpiConReporte = document.getElementById('kpiConReporte');
+        const kpiConReporteSub = document.getElementById('kpiConReporteSub');
+        const kpiReportesHoy = document.getElementById('kpiReportesHoy');
+        const kpiReportesHoySub = document.getElementById('kpiReportesHoySub');
+        const kpiUltimaActividad = document.getElementById('kpiUltimaActividad');
+        const kpiUltimaActividadSub = document.getElementById('kpiUltimaActividadSub');
+        const chipsCategorias = document.getElementById('chipsCategorias');
+        const busquedaFlota = document.getElementById('busquedaFlota');
+        const filtroEstadoFlota = document.getElementById('filtroEstadoFlota');
+        const contadorFlota = document.getElementById('contadorFlota');
+        const cuerpoTablaFlota = document.getElementById('cuerpoTablaFlota');
+        const sinVehiculosFlota = document.getElementById('sinVehiculosFlota');
+
+        // Elementos Vista Reportes
         const filtroVehiculo = document.getElementById('filtroVehiculo');
         const fechaDesde = document.getElementById('fechaDesde');
         const fechaHasta = document.getElementById('fechaHasta');
@@ -809,19 +1771,46 @@
         const sinResultados = document.getElementById('sinResultados');
         const toast = document.getElementById('toast');
 
-        // Métricas
+        // Métricas de Reportes
         const metricTotal = document.getElementById('metricTotal');
         const metricMoviles = document.getElementById('metricMoviles');
         const metricKm = document.getElementById('metricKm');
         const metricHoras = document.getElementById('metricHoras');
 
+        let vehiculosLista = [];
         let vehiculosMap = new Map();
+        let ultimoRegistroPorPlaca = new Map();
+        let conteoRegistrosPorPlaca = new Map();
+        let categoriaActiva = 'Todas';
         let datosActuales = [];
+        let toastTimer = null;
+
+        function escapeHTML(val) {
+            return String(val ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
 
         function mostrarToast(mensaje) {
             toast.textContent = mensaje;
             toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function clasificarVehiculo(v) {
+            const cod = (v.codigo || '').toUpperCase();
+            const desc = (v.descripcion || '').toUpperCase();
+            if (cod.startsWith('CP') || desc.includes('COMPACTADOR')) return 'Compactadores';
+            if (cod.startsWith('VQ') || desc.includes('VOLQUETA')) return 'Volquetas';
+            if (cod.startsWith('CM') || desc.includes('CAMIONETA')) return 'Camionetas';
+            if (cod.startsWith('FG') || desc.includes('FURGON')) return 'Furgones';
+            if (cod.startsWith('AMP') || desc.includes('AMPLIROLL')) return 'Ampliroll';
+            if (cod.startsWith('CBZ') || cod.startsWith('ACBZ') || desc.includes('CABEZOTE')) return 'Cabezotes';
+            return 'Otros';
         }
 
         // Abrir y cerrar menú lateral en móvil
@@ -837,37 +1826,29 @@
         btnAbrirMenu.addEventListener('click', () => toggleSidebar(true));
         sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
 
-        // Activar la vista de reportes desde el sidenav
-        function activarVistaReportes() {
-            navReportes.classList.add('activo');
-            vistaBienvenida.style.display = 'none';
-            vistaReportes.style.display = 'block';
+        // Cambiar entre Menú Principal, Gestión de Vehículos y Consultar Reportes
+        function activarVista(vista) {
+            const titulos = {
+                principal: ['Centro de Control de Flota', 'Información general de vehículos'],
+                vehiculos: ['Gestión de Vehículos', 'Agregar o eliminar móviles de la base de datos'],
+                reportes: ['Consulta de Reportes', 'Supervisión operativa, kilometraje y exportación']
+            };
+            navPrincipal.classList.toggle('activo', vista === 'principal');
+            navVehiculos.classList.toggle('activo', vista === 'vehiculos');
+            navReportes.classList.toggle('activo', vista === 'reportes');
+            vistaPrincipal.style.display = vista === 'principal' ? 'block' : 'none';
+            vistaVehiculos.style.display = vista === 'vehiculos' ? 'block' : 'none';
+            vistaReportes.style.display = vista === 'reportes' ? 'block' : 'none';
+            topbarTitulo.textContent = titulos[vista][0];
+            topbarSubtitulo.textContent = titulos[vista][1];
             toggleSidebar(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        navReportes.addEventListener('click', activarVistaReportes);
-        btnIrReportes.addEventListener('click', activarVistaReportes);
-
-        // Cargar lista de vehículos en el selector
-        async function cargarVehiculos() {
-            const { data, error } = await supabase
-                .from('vehiculos')
-                .select('codigo, placa')
-                .order('codigo');
-
-            if (error) {
-                console.error("Error al cargar vehículos:", error);
-                return;
-            }
-
-            data.forEach(v => {
-                vehiculosMap.set(v.placa, v.codigo);
-            });
-
-            filtroVehiculo.innerHTML = '<option value="">Todas las móviles (Flota completa)</option>' +
-                data.map(v => `<option value="${v.placa}">${v.codigo ? v.codigo + ' · ' : ''}${v.placa}</option>`).join('');
-        }
+        navPrincipal.addEventListener('click', () => activarVista('principal'));
+        navVehiculos.addEventListener('click', () => activarVista('vehiculos'));
+        navReportes.addEventListener('click', () => activarVista('reportes'));
+        btnIrReportes.addEventListener('click', () => activarVista('reportes'));
 
         function formatearFecha(isoString) {
             if (!isoString) return '-';
@@ -880,6 +1861,440 @@
                 minute: '2-digit'
             });
         }
+
+        function esMismoDiaLocal(isoString, referencia) {
+            const d = new Date(isoString);
+            return d.getFullYear() === referencia.getFullYear() &&
+                d.getMonth() === referencia.getMonth() &&
+                d.getDate() === referencia.getDate();
+        }
+
+        // Cargar vehículos + resumen de últimos registros para la Vista Principal y el selector
+        async function cargarDatosIniciales(mostrarAviso = false) {
+            btnActualizarResumen.disabled = true;
+            try {
+                const [resVehiculos, resRegistros] = await Promise.all([
+                    supabase
+                        .from('vehiculos')
+                        .select('codigo, placa, descripcion')
+                        .order('codigo'),
+                    supabase
+                        .from('registros')
+                        .select('placa, nombre, ruta, km, horas, fecha', { count: 'exact' })
+                        .order('fecha', { ascending: false })
+                        .limit(1000)
+                ]);
+
+                if (resVehiculos.error) throw resVehiculos.error;
+                if (resRegistros.error) throw resRegistros.error;
+
+                badgeEstadoConexion.classList.remove('error');
+                badgeEstadoConexion.textContent = 'Supabase Conectado';
+
+                vehiculosLista = (resVehiculos.data || []).map(v => ({
+                    ...v,
+                    categoria: clasificarVehiculo(v)
+                }));
+
+                vehiculosMap = new Map();
+                vehiculosLista.forEach(v => vehiculosMap.set(v.placa, v.codigo));
+
+                // Poblar selector de vehículos en Consultar Reportes conservando selección previa
+                const seleccionActual = filtroVehiculo.value;
+                filtroVehiculo.innerHTML = '<option value="">Todas las móviles (Flota completa)</option>' +
+                    vehiculosLista.map(v => {
+                        const etiqueta = `${v.codigo ? v.codigo + ' · ' : ''}${v.placa}`;
+                        return `<option value="${escapeHTML(v.placa)}">${escapeHTML(etiqueta)}</option>`;
+                    }).join('');
+                if (seleccionActual && vehiculosMap.has(seleccionActual)) {
+                    filtroVehiculo.value = seleccionActual;
+                }
+
+                // Procesar registros para obtener el último estado de cada vehículo
+                const registros = resRegistros.data || [];
+                const totalHistorico = resRegistros.count ?? registros.length;
+                ultimoRegistroPorPlaca = new Map();
+                conteoRegistrosPorPlaca = new Map();
+
+                const hoy = new Date();
+                let reportesHoy = 0;
+
+                registros.forEach(r => {
+                    if (!ultimoRegistroPorPlaca.has(r.placa)) {
+                        ultimoRegistroPorPlaca.set(r.placa, r);
+                    }
+                    conteoRegistrosPorPlaca.set(r.placa, (conteoRegistrosPorPlaca.get(r.placa) || 0) + 1);
+                    if (r.fecha && esMismoDiaLocal(r.fecha, hoy)) {
+                        reportesHoy++;
+                    }
+                });
+
+                // Actualizar KPIs de la Vista Principal
+                const totalVehiculos = vehiculosLista.length;
+                const conReporte = vehiculosLista.filter(v => ultimoRegistroPorPlaca.has(v.placa)).length;
+                const sinReporte = totalVehiculos - conReporte;
+
+                kpiTotalVehiculos.textContent = totalVehiculos.toLocaleString();
+                kpiTotalVehiculosSub.textContent = 'Móviles activos en catálogo';
+
+                kpiConReporte.textContent = conReporte.toLocaleString();
+                kpiConReporteSub.textContent = sinReporte > 0
+                    ? `${sinReporte.toLocaleString()} sin registros aún`
+                    : 'Toda la flota con reporte';
+
+                kpiReportesHoy.textContent = reportesHoy.toLocaleString();
+                kpiReportesHoySub.textContent = `Total histórico: ${totalHistorico.toLocaleString()}`;
+
+                if (registros.length > 0) {
+                    const masReciente = registros[0];
+                    const codReciente = vehiculosMap.get(masReciente.placa);
+                    kpiUltimaActividad.textContent = formatearFecha(masReciente.fecha);
+                    kpiUltimaActividadSub.textContent = `${codReciente ? codReciente + ' · ' : ''}${masReciente.placa} — ${masReciente.nombre}`;
+                } else {
+                    kpiUltimaActividad.textContent = 'Sin registros';
+                    kpiUltimaActividadSub.textContent = 'Aún no hay reportes cargados';
+                }
+
+                renderizarChipsCategorias();
+                renderizarTablaFlota();
+                renderizarTablaGestionVehiculos();
+
+                if (mostrarAviso) {
+                    mostrarToast('Resumen de flota actualizado.');
+                }
+            } catch (err) {
+                console.error("Error al cargar datos iniciales:", err);
+                badgeEstadoConexion.classList.add('error');
+                badgeEstadoConexion.textContent = 'Error de conexión';
+                cuerpoTablaFlota.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 32px; color: #B42318;">
+                            No se pudo cargar la información de los vehículos desde Supabase.
+                        </td>
+                    </tr>
+                `;
+                mostrarToast('Error al cargar los vehículos desde Supabase.');
+            } finally {
+                btnActualizarResumen.disabled = false;
+            }
+        }
+
+        function renderizarChipsCategorias() {
+            const conteos = new Map();
+            vehiculosLista.forEach(v => {
+                conteos.set(v.categoria, (conteos.get(v.categoria) || 0) + 1);
+            });
+
+            const orden = ['Compactadores', 'Volquetas', 'Camionetas', 'Furgones', 'Ampliroll', 'Cabezotes', 'Otros'];
+            const categorias = ['Todas', ...orden.filter(c => conteos.has(c))];
+
+            chipsCategorias.innerHTML = categorias.map(cat => {
+                const cantidad = cat === 'Todas' ? vehiculosLista.length : conteos.get(cat);
+                const activo = categoriaActiva === cat ? 'activo' : '';
+                return `
+                    <button type="button" class="chip-cat ${activo}" data-categoria="${escapeHTML(cat)}">
+                        <span>${escapeHTML(cat)}</span>
+                        <span class="chip-num">${cantidad}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderizarTablaFlota() {
+            const termino = busquedaFlota.value.trim().toLowerCase();
+            const estado = filtroEstadoFlota.value;
+
+            const filtrados = vehiculosLista.filter(v => {
+                const ultimo = ultimoRegistroPorPlaca.get(v.placa);
+                if (categoriaActiva !== 'Todas' && v.categoria !== categoriaActiva) return false;
+                if (estado === 'con_reporte' && !ultimo) return false;
+                if (estado === 'sin_reporte' && ultimo) return false;
+
+                if (termino) {
+                    const texto = [
+                        v.placa,
+                        v.codigo,
+                        v.descripcion,
+                        v.categoria,
+                        ultimo?.nombre,
+                        ultimo?.ruta
+                    ].filter(Boolean).join(' ').toLowerCase();
+                    if (!texto.includes(termino)) return false;
+                }
+                return true;
+            });
+
+            contadorFlota.textContent = `Mostrando ${filtrados.length} de ${vehiculosLista.length} vehículos`;
+
+            if (!filtrados.length) {
+                cuerpoTablaFlota.innerHTML = '';
+                sinVehiculosFlota.style.display = 'block';
+                return;
+            }
+
+            sinVehiculosFlota.style.display = 'none';
+            cuerpoTablaFlota.innerHTML = filtrados.map(v => {
+                const ultimo = ultimoRegistroPorPlaca.get(v.placa);
+                return `
+                    <tr>
+                        <td style="white-space: nowrap;">
+                            <span class="badge-placa">${escapeHTML(v.placa)}</span>
+                            ${v.codigo ? `<span class="badge-codigo">${escapeHTML(v.codigo)}</span>` : ''}
+                        </td>
+                        <td>
+                            <div><span class="badge-tipo">${escapeHTML(v.categoria)}</span></div>
+                            <div class="desc-vehiculo">${escapeHTML(v.descripcion || 'Sin descripción registrada')}</div>
+                        </td>
+                        <td class="text-right" style="font-weight: 600; white-space: nowrap;">
+                            ${ultimo ? Number(ultimo.km).toLocaleString() : '<span style="color: #9AA5B4;">—</span>'}
+                        </td>
+                        <td class="text-right" style="font-weight: 600; white-space: nowrap;">
+                            ${ultimo ? Number(ultimo.horas).toLocaleString() : '<span style="color: #9AA5B4;">—</span>'}
+                        </td>
+                        <td>
+                            ${ultimo
+                                ? `<div style="font-weight: 600;">${escapeHTML(ultimo.nombre)}</div>
+                                   <div style="font-size: 0.78rem; color: var(--texto-secundario);">${escapeHTML(ultimo.ruta || 'Sin ruta')}</div>`
+                                : `<span class="badge-estado sin-reporte">Sin reporte</span>`
+                            }
+                        </td>
+                        <td style="font-size: 0.84rem; color: var(--texto-secundario); white-space: nowrap;">
+                            ${ultimo
+                                ? `<span class="badge-estado con-reporte">${escapeHTML(formatearFecha(ultimo.fecha))}</span>`
+                                : '—'
+                            }
+                        </td>
+                        <td class="text-right">
+                            <button type="button" class="btn-ver-historial" data-placa="${escapeHTML(v.placa)}">
+                                Ver historial
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Eventos de la Vista Principal
+        chipsCategorias.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-categoria]');
+            if (!btn) return;
+            categoriaActiva = btn.dataset.categoria;
+            renderizarChipsCategorias();
+            renderizarTablaFlota();
+        });
+
+        busquedaFlota.addEventListener('input', renderizarTablaFlota);
+        filtroEstadoFlota.addEventListener('change', renderizarTablaFlota);
+        btnActualizarResumen.addEventListener('click', () => cargarDatosIniciales(true));
+
+        cuerpoTablaFlota.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-placa]');
+            if (!btn) return;
+            filtroVehiculo.value = btn.dataset.placa;
+            fechaDesde.value = '';
+            fechaHasta.value = '';
+            activarVista('reportes');
+            consultarReportes();
+        });
+
+        // ================= GESTIÓN DE VEHÍCULOS (AGREGAR / ELIMINAR) =================
+        function mostrarAlertaVehiculo(tipo, mensaje) {
+            alertaVehiculo.className = `alerta-inline ${tipo}`;
+            alertaVehiculo.textContent = mensaje;
+        }
+
+        function ocultarAlertaVehiculo() {
+            alertaVehiculo.className = 'alerta-inline';
+            alertaVehiculo.textContent = '';
+        }
+
+        function renderizarTablaGestionVehiculos() {
+            const termino = busquedaGestionVehiculos.value.trim().toLowerCase();
+            const filtrados = vehiculosLista.filter(v => {
+                if (!termino) return true;
+                const texto = [v.placa, v.codigo, v.descripcion, v.categoria]
+                    .filter(Boolean).join(' ').toLowerCase();
+                return texto.includes(termino);
+            });
+
+            contadorGestionVehiculos.textContent = `${filtrados.length} de ${vehiculosLista.length} vehículos`;
+
+            if (!filtrados.length) {
+                cuerpoTablaGestionVehiculos.innerHTML = '';
+                sinVehiculosGestion.style.display = 'block';
+                return;
+            }
+
+            sinVehiculosGestion.style.display = 'none';
+            cuerpoTablaGestionVehiculos.innerHTML = filtrados.map(v => {
+                const cantRegistros = conteoRegistrosPorPlaca.get(v.placa) || 0;
+                return `
+                    <tr>
+                        <td style="white-space: nowrap;">
+                            <span class="badge-placa">${escapeHTML(v.placa)}</span>
+                        </td>
+                        <td style="white-space: nowrap;">
+                            ${v.codigo ? `<span class="badge-codigo" style="margin-left: 0;">${escapeHTML(v.codigo)}</span>` : '<span style="color: #9AA5B4;">—</span>'}
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <span class="badge-tipo" style="margin-bottom: 0;">${escapeHTML(v.categoria)}</span>
+                        </td>
+                        <td class="desc-vehiculo">${escapeHTML(v.descripcion || 'Sin descripción')}</td>
+                        <td class="text-right" style="font-weight: 600;">${cantRegistros.toLocaleString()}</td>
+                        <td class="text-right">
+                            <button type="button" class="btn-eliminar" data-eliminar-placa="${escapeHTML(v.placa)}">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        busquedaGestionVehiculos.addEventListener('input', renderizarTablaGestionVehiculos);
+
+        formNuevoVehiculo.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            ocultarAlertaVehiculo();
+
+            if (!esAdmin) {
+                mostrarAlertaVehiculo('error', 'Solo el usuario administrador autorizado puede agregar vehículos.');
+                return;
+            }
+
+            const placa = nuevoPlaca.value.trim().toUpperCase().replace(/\s+/g, '');
+            const codigo = nuevoCodigo.value.trim().toUpperCase() || null;
+            const descripcion = nuevoDescripcion.value.trim() || null;
+
+            if (!placa) {
+                mostrarAlertaVehiculo('error', 'Debes ingresar la placa del vehículo.');
+                nuevoPlaca.focus();
+                return;
+            }
+
+            if (vehiculosMap.has(placa)) {
+                mostrarAlertaVehiculo('error', `La placa ${placa} ya está registrada en la base de datos.`);
+                nuevoPlaca.focus();
+                return;
+            }
+
+            btnAgregarVehiculo.disabled = true;
+            try {
+                const { error } = await supabase
+                    .from('vehiculos')
+                    .insert({ placa, codigo, descripcion });
+
+                if (error) throw error;
+
+                formNuevoVehiculo.reset();
+                mostrarAlertaVehiculo('exito', `Vehículo ${placa}${codigo ? ' (' + codigo + ')' : ''} agregado correctamente.`);
+                mostrarToast(`Vehículo ${placa} agregado.`);
+                await cargarDatosIniciales();
+            } catch (err) {
+                console.error("Error al agregar vehículo:", err);
+                if (err.code === '23505') {
+                    mostrarAlertaVehiculo('error', `La placa ${placa} ya existe en la base de datos.`);
+                } else if (err.code === '42501') {
+                    mostrarAlertaVehiculo('error', 'Supabase bloqueó el alta por permisos (RLS/GRANT). Ejecuta el SQL de permisos de vehículos.');
+                } else {
+                    mostrarAlertaVehiculo('error', `No se pudo agregar el vehículo: ${err.message || 'error de conexión'}.`);
+                }
+            } finally {
+                btnAgregarVehiculo.disabled = false;
+            }
+        });
+
+        function abrirModalEliminar(placa) {
+            if (!esAdmin) {
+                mostrarToast('Solo el administrador puede eliminar vehículos.');
+                return;
+            }
+            const vehiculo = vehiculosLista.find(v => v.placa === placa);
+            if (!vehiculo) return;
+            placaPendienteEliminar = placa;
+
+            const cantRegistros = conteoRegistrosPorPlaca.get(placa) || 0;
+            modalEliminarDetalle.innerHTML = `
+                <div style="margin-bottom: 4px;">
+                    <span class="badge-placa">${escapeHTML(vehiculo.placa)}</span>
+                    ${vehiculo.codigo ? `<span class="badge-codigo">${escapeHTML(vehiculo.codigo)}</span>` : ''}
+                </div>
+                <div class="desc-vehiculo">${escapeHTML(vehiculo.descripcion || 'Sin descripción')}</div>
+            `;
+
+            if (cantRegistros > 0) {
+                modalEliminarAviso.style.display = 'block';
+                modalEliminarAviso.textContent = `Este vehículo tiene ${cantRegistros} registro(s) histórico(s) asociados y no puede eliminarse para proteger el historial operativo.`;
+                btnConfirmarEliminar.disabled = true;
+            } else {
+                modalEliminarAviso.style.display = 'none';
+                modalEliminarAviso.textContent = '';
+                btnConfirmarEliminar.disabled = false;
+            }
+
+            modalEliminar.classList.add('abierto');
+        }
+
+        function cerrarModalEliminar() {
+            placaPendienteEliminar = null;
+            modalEliminar.classList.remove('abierto');
+        }
+
+        cuerpoTablaGestionVehiculos.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-eliminar-placa]');
+            if (!btn) return;
+            abrirModalEliminar(btn.dataset.eliminarPlaca);
+        });
+
+        btnCancelarEliminar.addEventListener('click', cerrarModalEliminar);
+        modalEliminar.addEventListener('click', (e) => {
+            if (e.target === modalEliminar) cerrarModalEliminar();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalEliminar.classList.contains('abierto')) {
+                cerrarModalEliminar();
+            }
+        });
+
+        btnConfirmarEliminar.addEventListener('click', async () => {
+            if (!placaPendienteEliminar) return;
+            const placa = placaPendienteEliminar;
+            btnConfirmarEliminar.disabled = true;
+            btnConfirmarEliminar.textContent = 'Eliminando...';
+            ocultarAlertaVehiculo();
+
+            try {
+                const { data: eliminados, error } = await supabase
+                    .from('vehiculos')
+                    .delete()
+                    .eq('placa', placa)
+                    .select('placa');
+
+                if (error) throw error;
+                if (!eliminados || eliminados.length === 0) {
+                    throw { code: '42501', message: 'Sin permiso RLS para eliminar.' };
+                }
+
+                cerrarModalEliminar();
+                mostrarAlertaVehiculo('exito', `Vehículo ${placa} eliminado de la base de datos.`);
+                mostrarToast(`Vehículo ${placa} eliminado.`);
+                await cargarDatosIniciales();
+            } catch (err) {
+                console.error("Error al eliminar vehículo:", err);
+                cerrarModalEliminar();
+                if (err.code === '23503') {
+                    mostrarAlertaVehiculo('error', `No se puede eliminar ${placa} porque tiene registros históricos asociados.`);
+                } else if (err.code === '42501') {
+                    mostrarAlertaVehiculo('error', 'Supabase bloqueó la eliminación por permisos (RLS/GRANT). Ejecuta el SQL de permisos de vehículos.');
+                } else {
+                    mostrarAlertaVehiculo('error', `No se pudo eliminar ${placa}: ${err.message || 'error de conexión'}.`);
+                }
+            } finally {
+                btnConfirmarEliminar.disabled = false;
+                btnConfirmarEliminar.textContent = 'Sí, eliminar';
+            }
+        });
 
         // Consultar registros bajo demanda
         async function consultarReportes() {
@@ -947,13 +2362,13 @@
                 const codigo = vehiculosMap.get(r.placa) || '';
                 return `
                     <tr>
-                        <td style="font-size: 0.85rem; color: var(--texto-secundario);">${formatearFecha(r.fecha)}</td>
+                        <td style="font-size: 0.85rem; color: var(--texto-secundario);">${escapeHTML(formatearFecha(r.fecha))}</td>
                         <td>
-                            <span class="badge-placa">${r.placa}</span>
-                            ${codigo ? `<span class="badge-codigo">${codigo}</span>` : ''}
+                            <span class="badge-placa">${escapeHTML(r.placa)}</span>
+                            ${codigo ? `<span class="badge-codigo">${escapeHTML(codigo)}</span>` : ''}
                         </td>
-                        <td style="font-weight: 600;">${r.nombre}</td>
-                        <td>${r.ruta || '-'}</td>
+                        <td style="font-weight: 600;">${escapeHTML(r.nombre)}</td>
+                        <td>${escapeHTML(r.ruta || '-')}</td>
                         <td class="text-right" style="font-weight: 600;">${Number(r.km).toLocaleString()}</td>
                         <td class="text-right" style="font-weight: 600;">${Number(r.horas).toLocaleString()}</td>
                     </tr>
@@ -1007,8 +2422,188 @@
         btnConsultar.addEventListener('click', consultarReportes);
         btnExportar.addEventListener('click', exportarCSV);
 
-        // Inicializar
-        cargarVehiculos();
+        // ================= AUTENTICACIÓN Y ROL DE ADMINISTRADOR =================
+        function mostrarErrorLogin(msg) {
+            alertaLogin.className = 'alerta-inline error';
+            alertaLogin.textContent = msg;
+        }
+
+        function ocultarErrorLogin() {
+            alertaLogin.className = 'alerta-inline';
+            alertaLogin.textContent = '';
+        }
+
+        function abrirModalLogin(irAVehiculos = false) {
+            redirigirAVehiculosAlEntrar = irAVehiculos;
+            ocultarErrorLogin();
+            formLogin.reset();
+            modalLogin.classList.add('visible');
+            toggleSidebar(false);
+            setTimeout(() => loginEmail.focus(), 50);
+        }
+
+        function cerrarModalLogin() {
+            modalLogin.classList.remove('visible');
+            ocultarErrorLogin();
+        }
+
+        btnAbrirLogin.addEventListener('click', () => abrirModalLogin(false));
+        btnLoginDesdeVehiculos.addEventListener('click', () => abrirModalLogin(true));
+        btnCerrarModalLogin.addEventListener('click', cerrarModalLogin);
+        modalLogin.addEventListener('click', (e) => {
+            if (e.target === modalLogin) cerrarModalLogin();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalLogin.classList.contains('visible')) {
+                cerrarModalLogin();
+            }
+        });
+
+        async function verificarPermisoAdmin(user) {
+            if (!user || !user.email) return { autorizado: false, faltaConfig: false };
+            try {
+                const { data, error } = await supabase
+                    .from('admins')
+                    .select('email')
+                    .maybeSingle();
+
+                if (error) {
+                    if (error.code === '42P01' || error.code === 'PGRST205') {
+                        return { autorizado: false, faltaConfig: true };
+                    }
+                    console.error('Error al verificar rol admin:', error);
+                    return { autorizado: false, faltaConfig: false };
+                }
+                return { autorizado: Boolean(data), faltaConfig: false };
+            } catch (err) {
+                console.error('Error al verificar rol admin:', err);
+                return { autorizado: false, faltaConfig: false };
+            }
+        }
+
+        async function aplicarEstadoSesion(session) {
+            usuarioActual = session?.user ?? null;
+
+            if (!usuarioActual) {
+                esAdmin = false;
+                cerrarModalEliminar();
+
+                rolEtiqueta.textContent = 'Modo: Solo consulta';
+                rolEtiqueta.classList.remove('es-admin');
+                adminCorreo.textContent = 'Sin sesión de admin';
+                btnAbrirLogin.style.display = 'inline-flex';
+                btnCerrarSesion.style.display = 'none';
+
+                iconoCandadoVehiculos.style.display = 'inline-block';
+                bloqueoSoloAdmin.style.display = 'block';
+                contenidoGestionAdmin.style.display = 'none';
+                bloqueoAdminTitulo.textContent = 'Acceso exclusivo de Administrador';
+                bloqueoAdminTexto.textContent = 'En este panel todos los usuarios pueden consultar el Menú Principal y los Reportes, pero solo el usuario administrador autorizado puede agregar o eliminar vehículos de la base de datos.';
+                btnLoginDesdeVehiculos.style.display = 'inline-flex';
+                return;
+            }
+
+            const { autorizado, faltaConfig } = await verificarPermisoAdmin(usuarioActual);
+            esAdmin = autorizado;
+
+            adminCorreo.textContent = usuarioActual.email || 'Usuario';
+            btnAbrirLogin.style.display = 'none';
+            btnCerrarSesion.style.display = 'inline-flex';
+
+            if (esAdmin) {
+                rolEtiqueta.textContent = 'Administrador';
+                rolEtiqueta.classList.add('es-admin');
+                iconoCandadoVehiculos.style.display = 'none';
+                bloqueoSoloAdmin.style.display = 'none';
+                contenidoGestionAdmin.style.display = 'block';
+                renderizarTablaGestionVehiculos();
+
+                if (redirigirAVehiculosAlEntrar) {
+                    redirigirAVehiculosAlEntrar = false;
+                    activarVista('vehiculos');
+                }
+            } else {
+                cerrarModalEliminar();
+                rolEtiqueta.textContent = 'Modo: Solo consulta';
+                rolEtiqueta.classList.remove('es-admin');
+                iconoCandadoVehiculos.style.display = 'inline-block';
+                bloqueoSoloAdmin.style.display = 'block';
+                contenidoGestionAdmin.style.display = 'none';
+                btnLoginDesdeVehiculos.style.display = 'none';
+
+                if (faltaConfig) {
+                    bloqueoAdminTitulo.textContent = 'Falta configurar la tabla de administradores';
+                    bloqueoAdminTexto.textContent = 'Ejecuta el SQL de la tabla public.admins en Supabase e inserta tu correo de administrador para habilitar la edición de vehículos.';
+                } else {
+                    bloqueoAdminTitulo.textContent = 'Cuenta sin permisos de edición';
+                    bloqueoAdminTexto.textContent = `Has iniciado sesión como ${usuarioActual.email}, pero esta cuenta tiene acceso solo de consulta. Únicamente el administrador autorizado puede agregar o eliminar vehículos.`;
+                }
+            }
+        }
+
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            ocultarErrorLogin();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+
+            if (!email || !password) {
+                mostrarErrorLogin('Ingresa tu correo y contraseña.');
+                return;
+            }
+
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Verificando...';
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                cerrarModalLogin();
+                await aplicarEstadoSesion(data.session);
+                mostrarToast(esAdmin
+                    ? 'Sesión de administrador iniciada.'
+                    : 'Sesión iniciada en modo solo consulta.'
+                );
+            } catch (err) {
+                console.error("Error de login:", err);
+                const msg = (err.message || '').toLowerCase();
+                if (msg.includes('invalid login credentials')) {
+                    mostrarErrorLogin('Correo o contraseña incorrectos.');
+                } else if (msg.includes('email not confirmed')) {
+                    mostrarErrorLogin('El correo del administrador aún no está confirmado en Supabase.');
+                } else {
+                    mostrarErrorLogin(`No se pudo iniciar sesión: ${err.message || 'error de conexión'}.`);
+                }
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Ingresar como Administrador';
+            }
+        });
+
+        btnCerrarSesion.addEventListener('click', async () => {
+            btnCerrarSesion.disabled = true;
+            try {
+                await supabase.auth.signOut();
+                await aplicarEstadoSesion(null);
+                mostrarToast('Sesión cerrada. Panel en modo solo consulta.');
+            } catch (err) {
+                console.error("Error al cerrar sesión:", err);
+                mostrarToast('No se pudo cerrar la sesión.');
+            } finally {
+                btnCerrarSesion.disabled = false;
+            }
+        });
+
+        // Cargar datos públicos de consulta inmediatamente para cualquier visitante
+        cargarDatosIniciales();
+
+        // Verificar si hay una sesión de administrador activa y escuchar cambios
+        supabase.auth.onAuthStateChange((_event, session) => {
+            aplicarEstadoSesion(session);
+        });
+
+        supabase.auth.getSession().then(({ data }) => {
+            aplicarEstadoSesion(data.session);
+        });
     </script>
 </body>
 </html>

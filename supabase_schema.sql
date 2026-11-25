@@ -27,19 +27,65 @@ create table if not exists public.registros (
 create index if not exists registros_placa_fecha_idx
     on public.registros (placa, fecha desc);
 
--- 3. Permisos de esquema/tablas y Seguridad (RLS)
+-- 3. Tabla de administradores autorizados (solo modificable desde Supabase)
+create table if not exists public.admins (
+    email     text primary key,
+    creado_en timestamptz not null default now()
+);
+
+-- Función auxiliar para validar si el usuario autenticado es administrador
+create or replace function public.es_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+    select exists (
+        select 1
+        from public.admins
+        where lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+    );
+$$;
+
+-- 4. Permisos de esquema/tablas y Seguridad (RLS)
 grant usage on schema public to anon, authenticated;
+
+-- Admins: cada usuario autenticado solo puede verificar si su propio correo es admin
+revoke insert, update, delete on public.admins from anon, authenticated;
+grant select on public.admins to authenticated;
+
+-- Vehículos: lectura pública (conductores y consultores); alta y baja SOLO admin
+revoke insert, update, delete on public.vehiculos from anon;
 grant select on public.vehiculos to anon, authenticated;
+grant insert, delete on public.vehiculos to authenticated;
+
+-- Registros: lectura e inserción para conductores y panel de consulta
 grant select, insert on public.registros to anon, authenticated;
 grant usage, select on all sequences in schema public to anon, authenticated;
 
+alter table public.admins enable row level security;
 alter table public.vehiculos enable row level security;
 alter table public.registros enable row level security;
+
+drop policy if exists "consultar propio rol admin" on public.admins;
+create policy "consultar propio rol admin" on public.admins
+    for select to authenticated
+    using (lower(email) = lower(coalesce(auth.jwt() ->> 'email', '')));
 
 -- Cualquiera con la app puede leer la lista de vehículos
 drop policy if exists "leer vehiculos" on public.vehiculos;
 create policy "leer vehiculos" on public.vehiculos
     for select to anon, authenticated using (true);
+
+-- EXCLUSIVAMENTE el usuario registrado en public.admins puede agregar o eliminar vehículos
+drop policy if exists "insertar vehiculos" on public.vehiculos;
+create policy "insertar vehiculos" on public.vehiculos
+    for insert to authenticated with check (public.es_admin());
+
+drop policy if exists "eliminar vehiculos" on public.vehiculos;
+create policy "eliminar vehiculos" on public.vehiculos
+    for delete to authenticated using (public.es_admin());
 
 -- El formulario puede leer registros (para comparar con el anterior)
 -- y el panel puede consultarlos
